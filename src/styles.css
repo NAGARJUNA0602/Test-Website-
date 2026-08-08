@@ -1,0 +1,203 @@
+/* Hide Lovable badge */
+#__lovable-badge {
+  display: none !important;
+}
+
+@import "tailwindcss";
+
+
+@theme {
+  --color-brand-50: oklch(0.97 0.01 256.4);
+  --color-brand-100: oklch(0.93 0.03 256.4);
+  --color-brand-200: oklch(0.87 0.06 256.4);
+  --color-brand-300: oklch(0.77 0.12 256.4);
+  --color-brand-400: oklch(0.66 0.17 256.4);
+  --color-brand-500: #0b5cff; /* Vibrant Blue from style guide */
+  --color-brand-600: #0045db;
+  --color-brand-700: #0032a3;
+  --color-brand-800: #00226e;
+  --color-brand-900: #001238;
+  --color-brand-950: #00091c;
+
+  --color-navy-950: #050d21;
+  --color-navy-900: #0b1f4d; /* Deep Navy from style guide */
+  --color-navy-800: #152b61;
+  --color-navy-700: #1f3775;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Sora", var(--font-sans);
+  --font-body: "DM Sans", var(--font-sans);
+
+  --font-inter: "Inter", sans-serif;
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-sora: "Sora", sans-serif;
+
+  /* Typography Scale - Refined for Enterprise */
+  --text-7xl: 4.5rem; /* 72px */
+  --text-7xl--line-height: 1.05;
+  --text-7xl--letter-spacing: -0.02em;
+  
+  --text-5xl: 3rem;   /* 48px */
+  --text-5xl--line-height: 1.1;
+  --text-5xl--letter-spacing: -0.015em;
+
+  --text-xl: 1.125rem; /* 18px */
+  --text-xl--line-height: 1.6;
+  --text-xl--letter-spacing: -0.01em;
+}
+
+@layer base {
+  :root {
+    --bg-main: white;
+    --text-main: var(--color-navy-900);
+    --text-muted: #374151; /* Darker for better contrast in light mode */
+    --card-bg: #F8FAFC;
+    --border-color: #E2E8F0;
+  }
+
+  .dark {
+    --bg-main: var(--color-navy-900);
+    --text-main: white;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --card-bg: rgba(30, 41, 59, 0.2);
+    --border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  body {
+    @apply bg-[var(--bg-main)] text-[var(--text-main)] antialiased font-body selection:bg-brand-500/30 selection:text-white transition-colors duration-300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight text-[var(--text-main)];
+  }
+
+  h1 {
+    @apply text-5xl md:text-7xl font-extrabold leading-[1.1];
+  }
+
+  h2 {
+    @apply text-4xl md:text-5xl font-bold leading-tight;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  p, .text-muted {
+    @apply text-lg md:text-xl text-[var(--text-muted)] leading-relaxed font-normal;
+  }
+
+  button, a.button {
+    @apply font-sans font-semibold tracking-wide;
+  }
+}
+
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/[0.02] backdrop-blur-md border border-white/[0.05] rounded-2xl transition-all duration-300;
+  }
+  
+  .glass-card-hover {
+    @apply hover:bg-white/[0.04] hover:border-white/[0.1] hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60;
+  }
+
+  .brand-gradient {
+    @apply bg-gradient-to-r from-brand-500 to-brand-400;
+  }
+
+  .container-wide {
+    @apply w-full max-w-[100vw] px-6 lg:px-12 xl:px-20;
+  }
+
+  /* Performance-optimized animations */
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes spin-reverse-slow {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-spin-reverse-slow {
+    animation: spin-reverse-slow 15s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 6s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  /* Premium Logo Effects */
+  .logo-premium-glow {
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Ambient light for both modes */
+  .logo-premium-glow::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    z-index: -1;
+    filter: blur(12px);
+    opacity: 0.4;
+    transition: all 0.6s ease;
+  }
+
+  /* Light mode subtle glow (default) */
+  :root .logo-premium-glow::before {
+    background: radial-gradient(circle, rgba(11, 92, 255, 0.08) 0%, transparent 75%);
+    opacity: 0.3;
+  }
+
+  :root .logo-premium-glow:hover::before {
+    opacity: 0.6;
+    inset: -25px;
+  }
+
+  /* Dark mode premium aura */
+  .dark .logo-premium-glow::before {
+    background: radial-gradient(circle, rgba(11, 92, 255, 0.12) 0%, transparent 75%);
+    opacity: 0.6;
+  }
+  
+  .dark .logo-premium-glow:hover::before {
+    opacity: 1;
+    background: radial-gradient(circle, rgba(11, 92, 255, 0.2) 0%, transparent 70%);
+    inset: -25px;
+  }
+
+  .logo-premium-glow {
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.05));
+  }
+
+  .dark .logo-premium-glow {
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.15));
+  }
+  
+  .logo-premium-glow:hover {
+    filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.15));
+  }
+
+  .dark .logo-premium-glow:hover {
+    filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.35)) brightness(1.05);
+  }
+}
